@@ -2,8 +2,8 @@ import sys
 from pytest import raises, mark
 sys.path.append("..")
 
-from zk import *
-from parser import *
+from zkparser.zk import *
+from zkparser.parser import *
 
 
 pytest_plugins = ('pytest_asyncio',)
@@ -23,7 +23,7 @@ async def test_wallet_era():
     # print(eraw)
 
 @mark.asyncio
-async def test_wallet_era():
+async def test_wallet_linea():
     wallet = "0x686D64EDf5532912C2a1cd3a249b0e9363f81baD"
     pro_code = "elemgmU13"
     eraw = await get_wallet_linea_mainnet(wallet, pro_code)

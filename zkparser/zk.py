@@ -1,7 +1,7 @@
 from typing import Literal
 from pydantic import BaseModel
 
-from parser import (
+from zkparser.parser import (
         Chain,
         get_page_content,
         get_var_declaration_value,

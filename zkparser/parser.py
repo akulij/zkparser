@@ -65,7 +65,7 @@ def str_array(arr: str) -> list[int]:
     return re.findall(r"\d+", arr)
 
 def get_elem_content(page: str, elem_id: str) -> str | None:
-    bs = BeautifulSoup(page)
+    bs = BeautifulSoup(page, "html.parser")
 
     elem = bs.select_one(f"#{elem_id}")
     if not elem: return None
@@ -74,7 +74,7 @@ def get_elem_content(page: str, elem_id: str) -> str | None:
 
 
 def get_table_row_value(page: str, row: int) -> str:
-    bs = BeautifulSoup(page)
+    bs = BeautifulSoup(page, "html.parser")
 
     table = bs.select_one("#walletResults1")
 
