@@ -4,6 +4,8 @@ import httpx
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 
+from .utils import readtimeout_retry
+
 
 class Chain(Enum):
     ERA = "ERA"
@@ -38,6 +40,7 @@ def gen_url(wallet: str, pro_code: str, chain: Chain) -> str:
 
     return url
 
+@readtimeout_retry(5)
 async def get_page_content(wallet: str, pro_code: str, chain: Chain) -> str:
     url = gen_url(wallet, pro_code, chain)
     async with httpx.AsyncClient() as client:
@@ -51,7 +54,11 @@ def get_var_declaration_value(content: str, variable_name: str, declaration: str
     if declaration: var_declaration = declaration
     match = re.search(var_declaration, content)
     value: str = match.group(1)
-    return value.split("//")[0].replace(";", "").replace('"', "").replace("None", "-1")
+    val = value.split("//")[0].replace(";", "").replace('"', "").replace("None", "-1")
+    if val == "":
+        return "0"
+
+    return val
 
 def find_match(content: str, regex: str):
     return re.search(regex, content).group()
